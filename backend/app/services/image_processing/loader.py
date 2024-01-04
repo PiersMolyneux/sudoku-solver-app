@@ -1,5 +1,6 @@
 # This is the loader module for loading in datasets related to image processing
 import cv2
+import os
 
 
 def load_image(file_name: str):
@@ -19,12 +20,12 @@ def load_image(file_name: str):
     if not os.path.exists(file_name):
         raise FileNotFoundError(f"The file {file_name} does not exist.")
 
-    # Load the image in grayscale
-    original_image = cv2.imread(file_name, cv2.IMREAD_GRAYSCALE)
+    # Load the image in grayscale - easier to process in grayscale
+    image = cv2.imread(file_name, cv2.IMREAD_GRAYSCALE)
 
     # Check if the image was loaded successfully
-    if original_image is None:
+    if image is None:
         print(f"Failed to load the image from {file_name}.")
         return None
 
-    return original_image
+    return image
