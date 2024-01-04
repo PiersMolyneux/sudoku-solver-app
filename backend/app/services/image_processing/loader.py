@@ -1,6 +1,6 @@
 # This is the loader module for loading in datasets related to image processing
-import cv2
 import os
+import cv2
 
 
 def load_image(file_name: str):
@@ -11,7 +11,7 @@ def load_image(file_name: str):
     file_name (str): The path to the image file.
 
     Returns:
-    np.ndarray: The loaded image in grayscale format, or None if loading fails.
+    np.ndarray: The loaded image in RGB format, or None if loading fails.
 
     Raises:
     FileNotFoundError: If the file does not exist.
@@ -20,8 +20,8 @@ def load_image(file_name: str):
     if not os.path.exists(file_name):
         raise FileNotFoundError(f"The file {file_name} does not exist.")
 
-    # Load the image in grayscale - easier to process in grayscale
-    image = cv2.imread(file_name, cv2.IMREAD_GRAYSCALE)
+    # Load the image in RGB
+    image = cv2.imread(file_name, cv2.IMREAD_COLOR)
 
     # Check if the image was loaded successfully
     if image is None:
