@@ -1,4 +1,4 @@
-# This is the loader module for loading in sudoku images belonging to the image_processing package 
+# This is the loader module for loading in datasets related to image processing
 import cv2
 
 
