@@ -6,6 +6,36 @@ import cv2
 
 
 # Main Functions:
+
+
+def predict_cell_digits(model, cells):
+    """
+    Predicts the digit in each cell using the provided model.
+
+    Parameters:
+     - model: Trained PyTorch model for digit prediction.
+     - cells: List of cell images as 2D NumPy arrays.
+
+    Returns: 
+     - predictions: Predicted digits as a NumPy array.
+    """
+    preprocessed_cells = prepare_cells_for_prediction(cells)  # Preparing cells for prediction into single tensor
+
+    if model is None or not isinstance(preprocessed_cells, torch.Tensor):
+        raise ValueError("Invalid model or preprocessed_cells")
+
+    model.eval()  # Ensure the model is in eval mode
+    with torch.no_grad():
+        outputs = model(preprocessed_cells)
+        predictions = torch.argmax(outputs, dim=1)
+
+    return predictions.numpy() + 1  # Model predicts 0-8, need to correct for our digits
+
+
+
+
+# Supplementary functions:
+
 def prepare_cells_for_prediction(cells):
     """
     Prepare a batch of sudoku cell images for prediction.
@@ -23,32 +53,6 @@ def prepare_cells_for_prediction(cells):
     preprocessed_cells = [preprocess_image(cell) for cell in cells]
     return torch.cat(preprocessed_cells, dim=0)
 
-
-
-def predict_cell_digits(model, preprocessed_cells):
-    """
-    Predicts the digit in each cell using the provided model.
-
-    Parameters:
-     - model: Trained PyTorch model for digit prediction.
-     - preprocessed_cells: Preprocessed cells as a PyTorch tensor.
-
-    Returns: 
-     - predictions: Predicted digits as a NumPy array.
-    """
-    if model is None or not isinstance(preprocessed_cells, torch.Tensor):
-        raise ValueError("Invalid model or preprocessed_cells")
-
-    model.eval()  # Ensure the model is in eval mode
-    with torch.no_grad():
-        outputs = model(preprocessed_cells)
-        predictions = torch.argmax(outputs, dim=1)
-
-    return predictions.numpy()
-
-
-
-# Supplementary functions:
 
 def preprocess_image(image):
     """
