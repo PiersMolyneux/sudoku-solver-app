@@ -258,3 +258,11 @@ iOSInjectionProject/
 
 # End of https://www.toptal.com/developers/gitignore/api/swift,python
 .DS_Store
+backend/app/services/image_processing/cnn/data/MNIST/raw/train-labels-idx1-ubyte.gz
+backend/app/services/image_processing/cnn/data/MNIST/raw/train-labels-idx1-ubyte
+backend/app/services/image_processing/cnn/data/MNIST/raw/train-images-idx3-ubyte.gz
+backend/app/services/image_processing/cnn/data/MNIST/raw/train-images-idx3-ubyte
+backend/app/services/image_processing/cnn/data/MNIST/raw/t10k-labels-idx1-ubyte.gz
+backend/app/services/image_processing/cnn/data/MNIST/raw/t10k-labels-idx1-ubyte
+backend/app/services/image_processing/cnn/data/MNIST/raw/t10k-images-idx3-ubyte.gz
+backend/app/services/image_processing/cnn/data/MNIST/raw/t10k-images-idx3-ubyte
