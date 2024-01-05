@@ -15,6 +15,31 @@ Todo:
 ## Usage
 Todo:
 
+## Folder and File Structure
+
+The `sudoku-solver-app` project is structured as follows:
+
+- **backend/**: Contains all backend-related code.
+  - **app/**: Main application scripts and services.
+    - **script.py**: Main Python script for solving Sudoku from an image.
+    - **services/**: Supporting services for `script.py`.
+      - **image_processing/**: Modules for processing Sudoku images.
+        - **loader.py**: Loads Sudoku pictures.
+        - **preprocessor.py**: Preprocesses Sudoku images for model prediction.
+        - **cell_configurator.py**: Prepares individual Sudoku cells for model prediction.
+        - **digit_recognition/**: Machine Learning model for individual cell digit recognition.
+          - **model.py**: The ML model definition.
+          - **trainmodel.py**: Script for training the model.
+          - **tools.py**: Utilities for preparing cells for model predictions.
+          - **data/MNIST/**: MNIST dataset for model training.
+      - **solver/**: Sudoku solving logic.
+        - **sudoku_solver.py**: Solves Sudoku represented as a numpy array.
+  - **data/**: Data used by the backend.
+    - **sudoku_tests/**: Sudoku images for testing code functionality.
+
+- **frontend/**: 
+
+
 ## Contributing
 Guidelines for those who wish to contribute to the project.
 
