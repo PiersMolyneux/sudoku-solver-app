@@ -17,7 +17,9 @@ def extract_cells(transformed_image):
     # Grayscale, blur, threshold image
     transformed_image = cv2.cvtColor(transformed_image, cv2.COLOR_BGR2GRAY)
     transformed_image = cv2.GaussianBlur(transformed_image, (5, 5), 0)
-    _, transformed_image = cv2.threshold(transformed_image, 128, 255, cv2.THRESH_BINARY_INV)
+    # We want grayscale, not binary, hence apply a mask to remove noisy background, but keep the digit values
+    _, mask = cv2.threshold(transformed_image, 128, 1, cv2.THRESH_BINARY_INV)
+    transformed_image = transformed_image * mask
 
     # Calculate the size of each cell, include a negative padding for the cell
     padding_amount = 0.05  # padding percentage of cell size
