@@ -271,3 +271,14 @@ backend/app/services/image_processing/digit_recognition/data/MNIST/raw/t10k-imag
 backend/app/services/image_processing/digit_recognition/data/MNIST/raw/t10k-labels-idx1-ubyte
 backend/app/services/image_processing/digit_recognition/data/MNIST/raw/train-images-idx3-ubyte
 backend/app/services/image_processing/digit_recognition/data/MNIST/raw/train-labels-idx1-ubyte
+*.jpeg
+*.jpg
+backend/app/data/MNIST/raw/t10k-images-idx3-ubyte
+backend/app/data/MNIST/raw/t10k-labels-idx1-ubyte
+backend/app/data/MNIST/raw/train-images-idx3-ubyte
+backend/app/data/MNIST/raw/train-labels-idx1-ubyte
+backend/app/services/image_processing/data/MNIST/raw/t10k-images-idx3-ubyte
+backend/app/services/image_processing/data/MNIST/raw/t10k-labels-idx1-ubyte
+backend/app/services/image_processing/data/MNIST/raw/train-images-idx3-ubyte
+backend/app/services/image_processing/data/MNIST/raw/train-labels-idx1-ubyte
+*.jpg
