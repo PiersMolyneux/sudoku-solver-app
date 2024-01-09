@@ -1,39 +1,51 @@
 import torch
 import torchvision
 import torchvision.transforms as transforms
-from torch.utils.data import DataLoader, random_split
+from torch.utils.data import DataLoader, random_split, ConcatDataset
 from torch.optim.lr_scheduler import ReduceLROnPlateau
+from torchvision.datasets import ImageFolder, MNIST
 import torch.optim as optim
 from model import sudokuCNN
-
 
 def main():
     # Configuration
     BATCH_SIZE = 4
     NUM_EPOCHS = 30
     TRAIN_SPLIT = 0.9
+    CUSTOM_DATA_PATH = './digit_recognition_data'  # Custom dataset path
 
-    # Transform to convert images to PyTorch tensors and normalize them
-    transform = transforms.Compose([transforms.ToTensor(), transforms.Normalize((0.5,), (0.5,))])
+    # Define transformations
+    transform = transforms.Compose([
+        transforms.Resize((28, 28)),  
+        transforms.Grayscale(),       # Convert to grayscale if not already
+        transforms.ToTensor(),
+        transforms.Normalize((0.5,), (0.5,))  
+    ])
 
     # Load and preprocess the MNIST dataset
-    trainset_full = torchvision.datasets.MNIST(root='./data', train=True, download=True, transform=transform)
-    testset_full = torchvision.datasets.MNIST(root='./data', train=False, download=True, transform=transform)
+    mnist_trainset = MNIST(root='./data', train=True, download=True, transform=transform)
+    mnist_testset = MNIST(root='./data', train=False, download=True, transform=transform)
 
-    # Filter out digit 0 and adjust labels to remove 
-    # Adjust the labels to 0-8, as this is what our model expects
-    trainset = [(img, label-1) for img, label in trainset_full if label != 0]
-    testset = [(img, label-1) for img, label in testset_full if label != 0]
+    # Load your custom dataset
+    custom_dataset = ImageFolder(root=CUSTOM_DATA_PATH, transform=transform)
 
-    # Split dataset into training and validation sets
-    train_size = int(TRAIN_SPLIT * len(trainset))
-    val_size = len(trainset) - train_size
-    train_dataset, val_dataset = random_split(trainset, [train_size, val_size])
+    # Combine datasets
+    combined_trainset = ConcatDataset([mnist_trainset, custom_dataset])
+    test_dataset = mnist_testset  
 
-    # Data loaders for training, validation, and test sets, drop_last=True due to error arising from batch normalization of last data val
+    # Split combined dataset into training and validation sets
+    train_size = int(TRAIN_SPLIT * len(combined_trainset))
+    val_size = len(combined_trainset) - train_size
+    train_dataset, val_dataset = random_split(combined_trainset, [train_size, val_size])
+
+    train_dataset = [(img, label-1) for img, label in train_dataset if label != 0]
+    val_dataset = [(img, label-1) for img, label in val_dataset if label != 0]
+    test_dataset = [(img, label-1) for img, label in test_dataset if label != 0]
+
+    # Data loaders for training, validation, and test sets
     trainloader = DataLoader(train_dataset, batch_size=BATCH_SIZE, shuffle=True, num_workers=2, drop_last=True)
     valloader = DataLoader(val_dataset, batch_size=BATCH_SIZE, shuffle=False, num_workers=2, drop_last=True)
-    testloader = DataLoader(testset, batch_size=BATCH_SIZE, shuffle=False, num_workers=2, drop_last=True)
+    testloader = DataLoader(test_dataset, batch_size=BATCH_SIZE, shuffle=False, num_workers=2, drop_last=True)
 
     # Model, loss function, optimizer, and learning rate scheduler initialization
     model = sudokuCNN()
