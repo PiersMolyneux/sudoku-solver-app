@@ -1,20 +1,20 @@
 # This is the loader module for loading in datasets related to image processing
 import os
 import cv2
-
+import matplotlib.pyplot as plt
 
 def load_image(file_name: str):
     """
     Load an image from a specified file.
 
     Parameters:
-    file_name (str): The path to the image file.
+     - file_name (str): The path to the image file.
 
     Returns:
-    np.ndarray: The loaded image in RGB format, or None if loading fails.
+     - np.ndarray: The loaded image in RGB format, or None if loading fails.
 
     Raises:
-    FileNotFoundError: If the file does not exist.
+     - FileNotFoundError: If the file does not exist.
     """
     # Check if file exists
     if not os.path.exists(file_name):
@@ -29,3 +29,12 @@ def load_image(file_name: str):
         return None
 
     return image
+
+
+def plotter(img):
+    plt.imshow(img)
+    plt.show()
+    
+def hist(img):
+    plt.hist(img)
+    plt.show()
