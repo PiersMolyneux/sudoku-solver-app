@@ -2,7 +2,7 @@ import numpy as np
 
 
 #  Main function
-def solve_sudoku(sudoku):
+def solver(sudoku):
     """
     Solves a Sudoku puzzle using a backtracking algorithm.
 
@@ -22,7 +22,7 @@ def solve_sudoku(sudoku):
     for value in range(1, 10):
         if is_valid_placement(sudoku, row, col, value):
             sudoku[row, col] = value
-            if solve_sudoku(sudoku):
+            if solver(sudoku):
                 return True
             sudoku[row, col] = 0  # Backtrack
 
