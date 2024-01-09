@@ -7,13 +7,30 @@ import numpy as np
 # Main function :
 def isolate_sudoku(image):
     """
-    Perform a perspective transform to obtain a top-down view of an image and isolate the sudoku.
+    Isolate and warp a Sudoku puzzle from an image to a top-down, bird's-eye view.
+
+    This function takes an image that contains a Sudoku puzzle, detects the largest contour assumed
+    to be the Sudoku grid, orders the corner points of this contour, and applies a perspective 
+    transform to obtain a straightened, top-down view of the grid. It returns a transformed image 
+    where the Sudoku occupies the entire frame, facilitating further processing like digit 
+    recognition.
 
     Parameters:
-    - image: Original image.
+    - image (numpy.ndarray): The original image containing a Sudoku puzzle, in BGR color format.
 
     Returns:
-    - transformed_image: The perspective-transformed image.
+    - transformed_image (numpy.ndarray): The perspective-transformed 3-channel image of the Sudoku
+      puzzle with a top-down view.
+
+    Raises:
+    - ValueError: If Sudoku corners cannot be detected or an unexpected number of corners is found.
+
+    Notes:
+    - The function relies on the supplementary functions `get_sudoku_corners`, `order_points`, and
+      `calculate_dimensions` to detect corners, order them, and calculate the dimensions of the 
+      Sudoku grid within the image, respectively.
+    - The image should be clear enough for the contours and corners to be detectable by edge 
+      detection and contour approximation algorithms.
     """
     # Find the corners of the sudoku, order them, figure out height and width of sudoku within image.
     corners = get_sudoku_corners(image) 

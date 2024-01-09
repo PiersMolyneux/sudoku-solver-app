@@ -1,30 +1,22 @@
-# This is the cell_extractor module for extracting cells from an rgb sudoku, assuming it's been isolated. We also determine if a sudoku cell is filled
+# This module serves to the role to go from a whole sudoku image to its numpy form, by looking at individual cells
 import cv2
 import numpy as np
+import matplotlib.pyplot as plt
 
 
-#  Main functions
-
-def extract_all_cells(transformed_image):
+def extract_all_cells(transformed_image, padding_amount=0.1):
     """
     Extracts individual cells from a Sudoku grid image.
 
     Parameters:
     - transformed_image: The perspective-transformed Sudoku grid image. (RGB)
+    - padding_amount: padding fraction of cell size, to help remove any potential borders
 
     Returns:
     - cells: List of images, each representing an individual cell in the Sudoku grid.
     """
-    # Grayscale, blur, threshold image
-    transformed_image = cv2.cvtColor(transformed_image, cv2.COLOR_BGR2GRAY)
-    transformed_image = cv2.GaussianBlur(transformed_image, (5, 5), 0)
 
-    # We want grayscale, not binary, hence apply a mask to remove noisy background, but keep the digit values
-    _, mask = cv2.threshold(transformed_image, 128, 1, cv2.THRESH_BINARY_INV)
-    transformed_image = transformed_image * mask
-
-    # Calculate the size of each cell, include a negative padding for the cell
-    padding_amount = 0.05  # padding percentage of cell size
+    # Calculate the size of each cell, include a negative padding for either side of the cell
     cell_height = transformed_image.shape[0] // 9
     cell_height_padding = int(cell_height * padding_amount)
     cell_width = transformed_image.shape[1] // 9
@@ -48,55 +40,27 @@ def extract_all_cells(transformed_image):
     return cells
 
 
-
-def isolate_filled_cells(cells, filled_pixel_threshold_fraction=0.01):
+def construct_sudoku_grid(cell_predictions, filled_cell_positions):
     """
-    Isolates filled cells from a list of cell images and keeps track of their original positions.
+    Constructs a 9x9 Sudoku grid with the predicted digits placed in the specified positions.
 
     Parameters:
-    - cells: A list of grayscale sudoku cell images.
-    - filled_pixel_threshold_fraction: The threshold percentage of filled pixels to determine if a cell is filled.
+    - cell_predictions: A NumPy array containing the predicted digits.
+    - filled_cell_positions: A list of positions where the digits should be placed in the Sudoku grid.
 
     Returns:
-    - filled_cells: A list of filled cell images.
-    - filled_cell_positions: The corresponding positions of filled cells in the original list.
+    - sudoku_grid: A 9x9 NumPy array representing the filled Sudoku grid.
     """
-    filled_cells = []
-    filled_cell_positions = []
+    if len(cell_predictions) != len(filled_cell_positions):
+        raise ValueError("The length of predictions and filled_cell_positions must be the same")
 
-    for i, cell in enumerate(cells):
-        if is_filled(cell, filled_pixel_threshold_fraction): 
-            filled_cells.append(cell)
-            filled_cell_positions.append(i)
-    
-    return filled_cells, filled_cell_positions
+    # Initialize a 9x9 grid with zeros
+    sudoku_grid = np.zeros((9, 9), dtype=int)
 
+    # Place the predictions in their respective positions
+    for pos, digit in zip(filled_cell_positions, cell_predictions):
+        row = pos // 9  # Integer division to find the row
+        col = pos % 9   # Modulus to find the column
+        sudoku_grid[row, col] = digit
 
-
-
-# Supplementary functions
-
-def is_filled(cell, filled_pixel_threshold_fraction=0.01):
-    """
-    Determine whether a cell is filled based on the number of sufficiently bright pixels in a grayscale image.
-
-    Parameters:
-    - cell: The grayscale image of the cell, where background noise has been removed
-    - filled_pixel_threshold_fraction: The threshold percentage of filled pixels to determine if a cell is filled.
-
-    Returns:
-    - True if the cell is filled, False otherwise.
-    """
-
-    # Count pixels with intensity higher than the threshold, choose an arbituary low threshold as background has been removed
-    intensity_threshold = 50
-    bright_pixels = np.sum(cell > intensity_threshold)
-
-    # Calculate the total number of pixels, and percentage of bright pixels
-    total_pixels = cell.size
-    bright_pixel_percentage = bright_pixels / total_pixels
-
-    # Determine if the cell is filled based on the percentage
-    return bright_pixel_percentage > filled_pixel_threshold_fraction
-
-
+    return sudoku_grid
