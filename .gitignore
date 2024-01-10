@@ -282,3 +282,5 @@ backend/app/services/image_processing/data/MNIST/raw/t10k-labels-idx1-ubyte
 backend/app/services/image_processing/data/MNIST/raw/train-images-idx3-ubyte
 backend/app/services/image_processing/data/MNIST/raw/train-labels-idx1-ubyte
 *.jpg
+*.pbxproj
+*.pbxproj
