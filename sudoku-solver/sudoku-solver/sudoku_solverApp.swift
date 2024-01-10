@@ -9,9 +9,16 @@ import SwiftUI
 
 @main
 struct sudoku_solverApp: App {
+    @AppStorage("onboarding") var needsOnboarding = true
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            HomeView()
+                .fullScreenCover(isPresented: $needsOnboarding) {
+                    needsOnboarding = false
+                } content: {
+                    OnboardingView()
+                         // needs to pass business model to onboarding view so we can request permission
+                }
         }
     }
 }

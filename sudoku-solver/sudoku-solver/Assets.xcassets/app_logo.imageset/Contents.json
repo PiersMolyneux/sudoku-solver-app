@@ -1,0 +1,22 @@
+{
+  "images" : [
+    {
+      "filename" : "DALL_E_2024-01-07_16.01.04_-_A_simpler_and_lighter-colored_app_icon_for_a_Sudoku_solver_app._The_icon_features_a_minimalist_3x3_Sudoku_grid_with_minimal_numbers__creating_a_clean_-removebg-preview.png",
+      "idiom" : "universal",
+      "scale" : "1x"
+    },
+    {
+      "filename" : "app_logo.png",
+      "idiom" : "universal",
+      "scale" : "2x"
+    },
+    {
+      "idiom" : "universal",
+      "scale" : "3x"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}
