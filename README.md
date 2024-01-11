@@ -1,7 +1,12 @@
-# sudoku-solver-app
+
+# Sudoku Solver App
 
 ## Overview
-This Sudoku Solver app is an innovative iPhone application that uses advanced image recognition and solving algorithms to solve Sudoku puzzles. Users can simply take a picture of a Sudoku puzzle, and the app will display the solved puzzle. The app leverages a Python backend with OpenCV and PyTorch for image processing and puzzle solving, and a Swift-based frontend for a seamless user experience.
+The Sudoku Solver app is an iPhone application designed to effortlessly solve Sudoku puzzles using  image recognition and puzzle-solving algorithms. With the convenience of a snapshot, users can capture any Sudoku puzzle, and the app swiftly processes and presents the solution or gives the user a next-step hint. The backend is powered by Python, utilizing OpenCV and PyTorch for  image processing and algorithmic resolution. The frontend, developed in Swift, ensures a fluid and user-friendly experience, integrating with the backend capabilities.
+
+### Note to Users and Developers
+My journey in developing this app included learning Swift for the frontend implementation. While my expertise is more pronounced in backend development, the frontend aspects of the app were created with equal dedication. However, as I am relatively new to frontend development and app design, there may be areas for improvement or overlooked efficiencies. I am open to feedback and suggestions for both the backend and frontend components of the app. If you have any insights or notice any potential enhancements, please feel free to reach out to me at piersmolyd@gmail.com. 
+
 
 ## Features
 - **Image Recognition**: Employs a robust CNN algorithm to recognize the puzzle digits.
@@ -39,8 +44,10 @@ The `sudoku-solver-app` project is structured as follows:
   - **data/**: Examples used for testing the backend.
     - **sudoku_tests/**: Sudoku images for testing code functionality.
 
-- **frontend/**: 
-
+- **sudoku-solver/**: Frontend for the app
+  - **sudoku-solver.xcodeproj**: Frontend app file
+  - **sudoku-solver/**: Supporting files for frontend
+  
 
 ## Contributing
 Guidelines for those who wish to contribute to the project.
