@@ -140,4 +140,14 @@ final class SudokuGridView: UIView {
         }
         context.strokePath()
     }
+    
+//    // Make editable
+//    func setGridEditable(_ isEditable: Bool) {
+//        cells.forEach { row in
+//            row.forEach { cell in
+//                cell.isEditable = isEditable
+//            }
+//        }
+//    }
+
 }

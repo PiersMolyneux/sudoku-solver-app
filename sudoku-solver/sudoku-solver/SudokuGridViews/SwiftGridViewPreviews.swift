@@ -9,6 +9,7 @@ import SwiftUI
 // SwiftUI wrapper for your SudokuGridView
 struct SudokuGridViewRepresentable: UIViewRepresentable {
     var numbers: [[Int]]
+    var isEditable: Bool
 
     // Create the UIView instance to be presented by SwiftUI
     func makeUIView(context: Context) -> SudokuGridView {
@@ -21,6 +22,7 @@ struct SudokuGridViewRepresentable: UIViewRepresentable {
     func updateUIView(_ uiView: SudokuGridView, context: Context) {
         // Update the grid if your numbers array changes
         uiView.initializeGrid(with: numbers)
+//        uiView.setGridEditable(isEditable)
     }
 }
 
@@ -40,7 +42,7 @@ struct SudokuGridView_Previews: PreviewProvider {
             [0, 0, 0, 0, 8, 0, 0, 7, 9]
         ]
         
-        SudokuGridViewRepresentable(numbers: exampleSudokuData)
+        SudokuGridViewRepresentable(numbers: exampleSudokuData, isEditable: true)
             .frame(width: UIScreen.main.bounds.width * 0.95, height: UIScreen.main.bounds.width * 0.95)
             .previewLayout(.sizeThatFits)
     }

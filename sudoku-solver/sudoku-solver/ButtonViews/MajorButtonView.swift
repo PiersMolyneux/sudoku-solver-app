@@ -9,7 +9,6 @@ struct MajorButtonView: View {
         ZStack {
             Rectangle()
                 .foregroundColor(Color(red: 0.98, green: 0.98, blue: 0.95))
-//                .foregroundColor(.clear)
                 .frame(width: 300, height: 54)
                 .background(Color(red: 0.57, green: 0.78, blue: 0.81))
                 .cornerRadius(15)
@@ -21,7 +20,6 @@ struct MajorButtonView: View {
 
             Text(text)
                 .font(Font.custom("SFProText-Bold", size: 22))
-//                .foregroundColor(Color(red: 0.95, green: 0.94, blue: 0.91))
                 .foregroundStyle(.black)
                 .modifier(TextStrokeModifier(strokeWidth: 1, strokeColor: .white))
         }
