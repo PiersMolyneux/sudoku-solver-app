@@ -16,7 +16,7 @@ def allowed_file(filename):
     Returns:
     bool: True if the file extension is allowed, False otherwise.
     """
-    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ['png', 'jpg', 'jpeg', 'gif']
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ['png', 'jpg', 'jpeg']
 
 def read_image(file):
     """
